@@ -1,0 +1,19 @@
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment (if a student tries creating one locally)
+.venv/
+venv/
+ENV/
+env/
+
+# VS Code and IDE settings
+.vscode/
+.idea/

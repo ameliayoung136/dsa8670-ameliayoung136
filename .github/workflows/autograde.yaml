@@ -1,0 +1,96 @@
+name: Self-Check
+
+# This workflow is a SELF-CHECK for students, not a grading mechanism.
+# It reports what it finds and always succeeds, so a red X never scares anyone.
+# Grading happens in Canvas.
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  self-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Full history. Without this, the checkout is shallow and the
+          # commit count below is always 1, no matter what you have done.
+          fetch-depth: 0
+
+      - name: Run checks
+        run: |
+          PASS=0
+          FAIL=0
+          {
+            echo "## DSA 8670 Week 5 self-check"
+            echo ""
+            echo "| Check | Result |"
+            echo "|---|---|"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          report () {  # report <ok|no> <description>
+            if [ "$1" = "ok" ]; then
+              echo "✅ $2"
+              echo "| $2 | ✅ |" >> "$GITHUB_STEP_SUMMARY"
+              PASS=$((PASS+1))
+            else
+              echo "⬜ $2"
+              echo "| $2 | ⬜ not yet |" >> "$GITHUB_STEP_SUMMARY"
+              FAIL=$((FAIL+1))
+            fi
+          }
+
+          # 1. intro.txt personalized
+          if [ ! -f intro.txt ]; then
+            report no "intro.txt exists"
+          elif grep -q "\[STUDENT NAME\]" intro.txt; then
+            report no "intro.txt has your name in place of [STUDENT NAME]"
+          else
+            report ok "intro.txt has your name in place of [STUDENT NAME]"
+          fi
+
+          # 2. commit count
+          COMMITS=$(git rev-list --count HEAD)
+          echo "Commits on this branch: $COMMITS"
+          if [ "$COMMITS" -ge 6 ]; then
+            report ok "At least 6 commits (you have $COMMITS)"
+          else
+            report no "At least 6 commits (you have $COMMITS)"
+          fi
+
+          # 3. reflection.md
+          if [ -s reflection.md ]; then
+            report ok "reflection.md exists and is not empty"
+          else
+            report no "reflection.md exists and is not empty"
+          fi
+
+          # 4. pseudocode.md
+          if [ -s pseudocode.md ]; then
+            report ok "pseudocode.md exists and is not empty"
+          else
+            report no "pseudocode.md exists and is not empty"
+          fi
+
+          # 5. hello.py still runs
+          if python3 src/hello.py > /dev/null 2>&1; then
+            report ok "src/hello.py runs without an error"
+          else
+            report no "src/hello.py runs without an error"
+          fi
+
+          {
+            echo ""
+            echo "**$PASS of $((PASS+FAIL)) checks satisfied.**"
+            echo ""
+            echo "Items marked ⬜ are not errors. They are things you have not done *yet*."
+            echo "This check never fails and is not your grade; submit your work in Canvas."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo ""
+          echo "$PASS of $((PASS+FAIL)) checks satisfied."
+          exit 0
