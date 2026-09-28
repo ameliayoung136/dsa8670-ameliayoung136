@@ -69,6 +69,15 @@ By the end of Week 5, you should be able to:
   team creates together, not this one. Instructions are in Canvas.
 
 ---
+## Why Version Control Matters for Analytics
+
+Analytics work is full of decisions that never get written down. How a metric was defined, 
+which rows got filtered out, which approach was tried first and abandoned. Those choices 
+usually live in someone's head or a chat thread nobody can find six months later. Version 
+control forces them into a record, because each commit pairs the changes with an explanation
+of why it was made. The readings describe Git as a way to track the history of a project 
+rather than just store its current state, and for analytics that history is often what 
+someone questions first when a number looks wrong. 
 
 ## License
 
