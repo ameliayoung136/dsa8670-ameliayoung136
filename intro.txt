@@ -4,6 +4,6 @@ Name: Amelia Young
 
 Major / program: M.S. Data Science and Analytics
 
-Favorite dataset or industry interest:
+Favorite dataset or industry interest: Real estate investment data- daily funding activity, loan performance, and property level operating metrics. 
 
 One reason I am studying analytics:
