@@ -6,4 +6,4 @@ Major / program: M.S. Data Science and Analytics
 
 Favorite dataset or industry interest: Real estate investment data- daily funding activity, loan performance, and property level operating metrics. 
 
-One reason I am studying analytics:
+One reason I am studying analytics: I work as an analyst at a real estate investment company and spend most of my time automating manual reporting. I want to get better at making sure that work actually changes decisions, not just moves numbers faster. 
